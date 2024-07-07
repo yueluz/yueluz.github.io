@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ubuntu on codex</title>
+    <link>http://localhost:1313/tags/ubuntu/</link>
+    <description>Recent content in Ubuntu on codex</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <copyright>© {year}</copyright>
+    <lastBuildDate>Sun, 07 Jul 2024 00:08:03 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/ubuntu/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>在ubuntu上使用clash</title>
+      <link>http://localhost:1313/blog/240707-%E5%9C%A8ubuntu%E4%B8%8A%E4%BD%BF%E7%94%A8clash/</link>
+      <pubDate>Sun, 07 Jul 2024 00:08:03 +0800</pubDate>
+      <guid>http://localhost:1313/blog/240707-%E5%9C%A8ubuntu%E4%B8%8A%E4%BD%BF%E7%94%A8clash/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
