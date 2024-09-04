@@ -1,9 +1,141 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blogs on codex</title><link>https://gali.fan/blog/</link><description>Recent content in Blogs on codex</description><generator>Hugo</generator><language>en-us</language><copyright>© {year}</copyright><lastBuildDate>Mon, 05 Aug 2024 09:59:37 +0800</lastBuildDate><atom:link href="https://gali.fan/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>白云小马</title><link>https://gali.fan/blog/240805/</link><pubDate>Mon, 05 Aug 2024 09:59:37 +0800</pubDate><guid>https://gali.fan/blog/240805/</guid><description/></item><item><title>Ubuntu安装Docker和Docker-compose</title><link>https://gali.fan/blog/240717-01/</link><pubDate>Wed, 17 Jul 2024 14:09:11 +0800</pubDate><guid>https://gali.fan/blog/240717-01/</guid><description>背景 近期在学习Saleor，它支持docker安装，前段时间了解了一下docker，感觉很方便，于是打算试试，但是由于某些原因docker被墙了，本文记录docker安装时遇到的问题以及解决。
-正文 下载deb包 在docker官网下载deb包
-点击Download for Linux 选择你的发行版，我的是ubuntu 点击下载deb包 安装deb包 使用dpkg -i xxx.deb安装时，应该会需要安装一些依赖，其中有个叫做docker-ce-cli的包一直安装不上，报错Docker Desktop doesn't install saying docker-ce-cli not installable。 在网上查阅资料，在stackoverflow上找到一篇帖子，成功得以解决，原贴链接 他给出的解决方法如下：
-sudo apt install -y ca-certificates curl gnupg lsb-release sudo mkdir -p /etc/apt/keyrings curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg echo &amp;quot;deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&amp;quot; | sudo tee /etc/apt/sources.list.d/docker.list &amp;gt; /dev/null sudo apt update -y sudo apt install ./docker-desktop-&amp;lt;version&amp;gt;-&amp;lt;arch&amp;gt;.deb 但是在执行sudo apt update -y时，由于docker被墙，会出现以下错误：</description></item><item><title>通过Actions推送部署GithubPages域名被解绑问题解决</title><link>https://gali.fan/blog/240707-03/</link><pubDate>Sun, 07 Jul 2024 12:48:05 +0800</pubDate><guid>https://gali.fan/blog/240707-03/</guid><description>问题描述 使用Github Action将hugo生成的public文件夹推送到github.io仓库时，pages绑定的域名会被自动解绑，导致访问报404
-解决办法 在hugo项目根目录创建一个名为static的文件夹（如果它还不存在），这个文件夹中的内容会被hugo直接复制到生成的public文件夹中。 在static文件夹中创建一个名为CNAME的文件，并在其中写入你的域名。以本站为例： $ echo &amp;quot;gali.fan&amp;quot; &amp;gt;&amp;gt; static/CNAME 确保Github Actions工作流中，不会删除或忽略CNAME文件。修改Github Actions工作流文件： # gh-pages.yml ... - name: Deploy uses: peaceiris/actions-gh-pages@v3	# 一个自动发布github pages的action with: # github_token: ${{ secrets.GITHUB_TOKEN }} 该项适用于发布到源码相同repo的情况，不能用于发布到其他repo external_repository: yueluz/yueluz.github.io	# 发布到哪个repo personal_token: ${{ secrets.ACTION_ACCESS_TOKEN }}	# 发布到其他repo需要提供上面生成的personal access token publish_dir: ./public	# 注意这里指的是要发布哪个文件夹的内容，而不是指发布到目的仓库的什么位置，因为hugo默认生成静态网页到public文件夹，所以这里发布public文件夹里的内容 publish_branch: main	# 发布到哪个branch cname: gali.fan # 确保域名不会被解除 &amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;增加内容&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt; ...</description></item><item><title>我已不在仙界好多年</title><link>https://gali.fan/blog/240707-02/</link><pubDate>Sun, 07 Jul 2024 09:34:57 +0800</pubDate><guid>https://gali.fan/blog/240707-02/</guid><description>&lt;p>退出仙界已有数年之久，归隐山林不问仙事，然而江湖之上仍流传着那个名字，小迷妹不经意间提起，令我感慨万千&amp;hellip;&lt;/p></description></item><item><title>在ubuntu上使用clash（解决订阅地址不可用的问题）</title><link>https://gali.fan/blog/240707-01/</link><pubDate>Sun, 07 Jul 2024 00:08:03 +0800</pubDate><guid>https://gali.fan/blog/240707-01/</guid><description>参考文献 安儿 - Linux使用Clash，clash-for-linux 念迹丘海 - Linux（ubuntu）系统安装和使用clash 开始 下载clash之后解压，进入目录 $ unzip clash-for-linux-master.zip $ cd clash-for-linux-master 按照README.md文件里那样，在.env文件里写入订阅地址和secret，secret可以写得简单些，后面要用 $ nano .env 在clash-for-linux-master目录下执行： $ sudo bash start.sh 如果在执行sudo bash start.sh命令时报错订阅地址不可访问，如图所示： 原因可能是访问这条链接本身需要梯子😅，这就需要我们手动将订阅链接转成yaml文件，然后修改start.sh脚本。
-我没有找到比较好的订阅链接转yaml文件的工具，但是发现安卓版的clash可以导出yaml文件，方法如下：
-然后将该yml文件放到temp文件夹中，并重命名为clash_config.yaml
-$ mv clash_config.yaml clash-for-linux-master/temp/ # 我先改的名字，先后顺序无所谓 然后修改start.sh脚本，将配置文件下载部分和重命名部分注释掉，大概在第一百行左右
-... ## 临时取消环境变量 unset http_proxy unset https_proxy unset no_proxy unset HTTP_PROXY unset HTTPS_PROXY unset NO_PROXY ## Clash 订阅地址检测及配置文件下载 # 检查url是否有效 #echo -e '\n正在检测订阅地址...' #Text1=&amp;quot;Clash订阅地址可访问！&amp;quot; #Text2=&amp;quot;Clash订阅地址不可访问！&amp;quot; ##curl -o /dev/null -s -m 10 --connect-timeout 10 -w %{http_code} $URL | grep '[23][0-9][0-9]' &amp;amp;&amp;gt;/dev/null #curl -o /dev/null -L -k -sS --retry 5 -m 10 --connect-timeout 10 -w &amp;quot;%{http_code}&amp;quot; $URL | grep -E '^[23][0-9]{2}$' &amp;amp;&amp;gt;/dev/null #ReturnStatus=$?</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blogs on codex</title><link>https://gali.fan/blog/</link><description>Recent content in Blogs on codex</description><generator>Hugo</generator><language>en-us</language><copyright>© {year}</copyright><lastBuildDate>Wed, 04 Sep 2024 09:45:33 +0800</lastBuildDate><atom:link href="https://gali.fan/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>《黑神话：悟空》老猴子划船CG台词选录</title><link>https://gali.fan/blog/240904-01/</link><pubDate>Wed, 04 Sep 2024 09:45:33 +0800</pubDate><guid>https://gali.fan/blog/240904-01/</guid><description>&lt;p>&lt;strong>天下哪里不是贼船，不上我这艘，你以为就回得了头么？&lt;/strong>&lt;/p>
+&lt;h2 id="眼见喜">眼见喜&lt;/h2>
+&lt;p>老猴子：
+那猴子打小就这样，见到好东西一定要拿到手，
+别人不给，他就抢。
+这&lt;strong>眼见便喜，不择手段&lt;/strong>的臭毛病，
+与黑熊金池，又有何区别？&lt;/p>
+&lt;p>猪猪：
+小偷小摸要不得，学佛问道就是大功德？
+我看啊，差不多，都差不多。&lt;/p>
+&lt;h2 id="耳听怒">耳听怒&lt;/h2>
+&lt;p>老猴子：
+好一只泼猴，在地下成王成圣还不够，
+偏要跑到天上去讨个官儿做。
+可这天上没呆几日，只因王母不请他赴宴，便怒发冲冠，
+恨不得把整个天宫都给拆了。
+&lt;strong>耳听即怒，姿意妄为&lt;/strong>，
+和那黄毛畜生一个德行，养不熟，养不熟啊。&lt;/p>
+&lt;p>猪猪：
+那时他还小，不懂事嘛，
+又没佛祖教，又没师父带，
+你这老人家也忒小气，老揪住人家小时候的丑事不放。&lt;/p>
+&lt;p>老猴子：
+大了也没好到哪去。&lt;/p>
+&lt;p>老猴子：
+他从那五指山下出来后，说是懂了礼数，收了心性，
+车迟国这一泡尿，就全露馅了。
+目无尊长，自封偶像，
+从来没把佛祖师父那些教诲放在心上。&lt;/p>
+&lt;p>猪猪：
+顽皮而已。
+天生本事大的人，骨子里都有那么点自恋，我也一样。&lt;/p>
+&lt;h2 id="鼻嗅爱">鼻嗅爱&lt;/h2>
+&lt;p>老猴子：
+&lt;strong>鼻嗅痴爱，目空一切&lt;/strong>，
+比起那黄眉小子的狂妄，我看也不遑多让。&lt;/p>
+&lt;p>猪猪：
+这不是那谁吗，叫甚么夫人的，
+弄得师父一怒之下，把师兄赶回了老家。&lt;/p>
+&lt;p>老猴子：
+在白虎岭，他倒是狠心绝情，
+接连三次打碎过去的爱人，自以为从此不会再有牵挂，
+可你也明白，他心里根本没有放下，
+不然也不至于成了佛，仍要执意逃离灵山。&lt;/p>
+&lt;h2 id="舌尝思">舌尝思&lt;/h2>
+&lt;p>老猴子：
+&lt;strong>舌尝必思，多情易折&lt;/strong>。
+这一点他像你，还有你的那些个情人，
+无论身在何处，永远是孽海情天的囚徒。&lt;/p>
+&lt;p>猪猪：
+别扯我阿，老猪是慧根不够，
+师兄自那次后，情情爱爱的消停多了。&lt;/p>
+&lt;h2 id="身本忧">身本忧&lt;/h2>
+&lt;p>老猴子：
+八戒，仔细看看，这里很多你的好朋友。&lt;/p></description></item><item><title>白云小马</title><link>https://gali.fan/blog/240805-01/</link><pubDate>Mon, 05 Aug 2024 09:59:37 +0800</pubDate><guid>https://gali.fan/blog/240805-01/</guid><description>&lt;p>&lt;img src="1.png" alt="">&lt;/p></description></item><item><title>Ubuntu安装Docker和Docker-compose</title><link>https://gali.fan/blog/240717-01/</link><pubDate>Wed, 17 Jul 2024 14:09:11 +0800</pubDate><guid>https://gali.fan/blog/240717-01/</guid><description>&lt;h3 id="背景">背景&lt;/h3>
+&lt;p>近期在学习&lt;code>Saleor&lt;/code>，它支持docker安装，前段时间了解了一下docker，感觉很方便，于是打算试试，但是由于某些原因docker被墙了，本文记录docker安装时遇到的问题以及解决。&lt;/p>
+&lt;h3 id="正文">正文&lt;/h3>
+&lt;ol>
+&lt;li>下载deb包&lt;/li>
+&lt;/ol>
+&lt;p>在&lt;a href="https://www.docker.com/products/docker-desktop/" 
+ 
+ target="_blank" rel="noreferrer noopener" 
+>docker官网&lt;/a>下载deb包&lt;/p>
+&lt;p>点击&lt;code>Download for Linux&lt;/code>
+&lt;img src="1.png" alt="">
+选择你的发行版，我的是ubuntu
+&lt;img src="2.png" alt="">
+点击下载deb包
+&lt;img src="3.png" alt="">&lt;/p>
+&lt;ol start="2">
+&lt;li>安装deb包
+使用&lt;code>dpkg -i xxx.deb&lt;/code>安装时，应该会需要安装一些依赖，其中有个叫做&lt;code>docker-ce-cli&lt;/code>的包一直安装不上，报错&lt;code>Docker Desktop doesn't install saying docker-ce-cli not installable&lt;/code>。
+在网上查阅资料，在stackoverflow上找到一篇帖子，成功得以解决，&lt;a href="https://stackoverflow.com/questions/72299444/docker-desktop-doesnt-install-saying-docker-ce-cli-not-installable" 
+ 
+ target="_blank" rel="noreferrer noopener" 
+>原贴链接&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;p>他给出的解决方法如下：&lt;/p>
+&lt;pre>&lt;code class="language-bash">sudo apt install -y ca-certificates curl gnupg lsb-release
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo &amp;quot;deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&amp;quot; | sudo tee /etc/apt/sources.list.d/docker.list &amp;gt; /dev/null
+sudo apt update -y
+
+sudo apt install ./docker-desktop-&amp;lt;version&amp;gt;-&amp;lt;arch&amp;gt;.deb
+&lt;/code>&lt;/pr</description></item><item><title>通过Actions推送部署GithubPages域名被解绑问题解决</title><link>https://gali.fan/blog/240707-03/</link><pubDate>Sun, 07 Jul 2024 12:48:05 +0800</pubDate><guid>https://gali.fan/blog/240707-03/</guid><description>&lt;h3 id="问题描述">问题描述&lt;/h3>
+&lt;p>使用Github Action将hugo生成的public文件夹推送到github.io仓库时，pages绑定的域名会被自动解绑，导致访问报404&lt;/p>
+&lt;h3 id="解决办法">解决办法&lt;/h3>
+&lt;ol>
+&lt;li>在hugo项目根目录创建一个名为&lt;code>static&lt;/code>的文件夹（如果它还不存在），这个文件夹中的内容会被hugo直接复制到生成的&lt;code>public&lt;/code>文件夹中。&lt;/li>
+&lt;li>在&lt;code>static&lt;/code>文件夹中创建一个名为&lt;code>CNAME&lt;/code>的文件，并在其中写入你的域名。以本站为例：&lt;/li>
+&lt;/ol>
+&lt;pre>&lt;code class="language-bash">$ echo &amp;quot;gali.fan&amp;quot; &amp;gt;&amp;gt; static/CNAME
+&lt;/code>&lt;/pre>
+&lt;ol start="3">
+&lt;li>确保Github Actions工作流中，不会删除或忽略&lt;code>CNAME&lt;/code>文件。修改Github Actions工作流文件：&lt;/li>
+&lt;/ol>
+&lt;pre>&lt;code class="language-yaml"># gh-pages.yml
+ ...
+
+- name: Deploy
+uses: peaceiris/actions-gh-pages@v3	# 一个自动发布github pages的action
+with:
+ # github_token: ${{ secrets.GITHUB_TOKEN }} 该项适用于发布到源码相同repo的情况，不能用于发布到其他repo
+ external_repository: yueluz/yueluz.github.io	# 发布到哪个repo
+ personal_token: ${{ secrets.ACTION_ACCESS_TOKEN }}	# 发布到其他repo需要提供上面生成的personal access token
+ publish_dir: ./public	# 注意这里指的是要发布哪个文件夹的内容，而不是指发布到目的仓库的什么位置，因为hugo默认生成静态网页到public文件夹，所以这里发布public文件夹里的内容
+ publish_branch: main	# 发布到哪个branch
+ cname: gali.fan # 确保域名不会被解除 &amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;增加内容&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;
+
+ ...
+&lt;/code>&lt;/pr</description></item><item><title>我已不在仙界好多年</title><link>https://gali.fan/blog/240707-02/</link><pubDate>Sun, 07 Jul 2024 09:34:57 +0800</pubDate><guid>https://gali.fan/blog/240707-02/</guid><description>&lt;p>退出仙界已有数年之久，归隐山林不问仙事，然而江湖之上仍流传着那个名字，小迷妹不经意间提起，令我感慨万千&amp;hellip;&lt;/p></description></item><item><title>在ubuntu上使用clash（解决订阅地址不可用的问题）</title><link>https://gali.fan/blog/240707-01/</link><pubDate>Sun, 07 Jul 2024 00:08:03 +0800</pubDate><guid>https://gali.fan/blog/240707-01/</guid><description>&lt;h2 id="参考文献">参考文献&lt;/h2>
+&lt;ol>
+&lt;li>&lt;a href="https://zhuanlan.zhihu.com/p/656856050" 
+ 
+ target="_blank" rel="noreferrer noopener" 
+>安儿 - Linux使用Clash，clash-for-linux&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://zhuanlan.zhihu.com/p/692414049" 
+ 
+ target="_blank" rel="noreferrer noopener" 
+>念迹丘海 - Linux（ubuntu）系统安装和使用clash&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;h2 id="开始">开始&lt;/h2>
+&lt;ol>
+&lt;li>下载clash之后解压，进入目录&lt;/li>
+&lt;/ol>
+&lt;pre>&lt;code class="language-bash">$ unzip clash-for-linux-master.zip
+$ cd clash-for-linux-master
+&lt;/code>&lt;/pre>
+&lt;ol start="2">
+&lt;li>按照&lt;code>README.md&lt;/code>文件里那样，在&lt;code>.env&lt;/code>文件里写入订阅地址和&lt;code>secret&lt;/code>，&lt;code>secret&lt;/code>可以写得简单些，后面要用&lt;/li>
+&lt;/ol>
+&lt;pre>&lt;code class="language-bash">$ nano .env
+&lt;/code>&lt;/pre>
+&lt;p>&lt;img src="1.png" alt="">&lt;/p>
+&lt;ol start="3">
+&lt;li>在&lt;code>clash-for-linux-master&lt;/code>目录下执行：&lt;/li>
+&lt;/ol>
+&lt;pre>&lt;code class="language-bash">$ sudo bash start.sh
+&lt;/code>&lt;/pr</description></item></channel></rss>
