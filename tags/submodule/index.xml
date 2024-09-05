@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Submodule on codex</title><link>https://gali.fan/tags/submodule/</link><description>Recent content in Submodule on codex</description><generator>Hugo</generator><language>en-us</language><copyright>© {year}</copyright><lastBuildDate>Thu, 05 Sep 2024 10:54:03 +0800</lastBuildDate><atom:link href="https://gali.fan/tags/submodule/index.xml" rel="self" type="application/rss+xml"/><item><title>git submodule update --remote与--init的区别</title><link>https://gali.fan/blog/240905-02/</link><pubDate>Thu, 05 Sep 2024 10:54:03 +0800</pubDate><guid>https://gali.fan/blog/240905-02/</guid><description>&lt;h2 id="关于submodule">关于submodule&lt;/h2>
+&lt;h3 id="1我为什么会用">1、我为什么会用&lt;/h3>
+&lt;p>因为我在使用hugo搭建博客时，在网上找了一个主题&lt;code>codex&lt;/code>就是使用的这种方式，我的博客项目仓库指定了他的主题仓库（此时对我来说他的主题相当于一个第三方依赖）。&lt;/p>
+&lt;h3 id="2为什么fork到自己的仓库">2、为什么fork到自己的仓库&lt;/h3>
+&lt;p>因为我想修改主题中的一些配置，只能fork过来进行自定义，此时我fork过来之后，相当于我可以任意修改这个主题，那我为什么不直接把源代码放到我的博客仓库中呢？因为我不知道可以这么干，我是今天才知道&amp;hellip;是在查阅&lt;code>git submodule update --remote&lt;/code>与&lt;code>git submodule update --init&lt;/code>这两条命令的区别的时候才知道。&lt;/p>
+&lt;h3 id="3remote与init的区别">3、remote与init的区别&lt;/h3>
+&lt;p>在更新第三方依赖的时候，有以上两条命令可以选择，区别在于：&lt;/p>
+&lt;ol>
+&lt;li>remote会根据&lt;code>.gitmodules&lt;/code>文件中的信息进行更新，会更新到submodule的&lt;strong>最新提交&lt;/strong>；&lt;/li>
+&lt;li>使用init时，会根据主仓库下submodule的某个特定提交（哈希值），从submodule的远程仓库中拉取这个特定提交。同时，&lt;code>git submodule update --init&lt;/code>可以看作&lt;code>git submodule init&lt;/code>和&lt;code>git submodule update&lt;/code>的结合，前者是初始化子模块，后者是根据当前主仓库的某个提交拉取远程仓库的代码。&lt;/li>
+&lt;/ol>
+&lt;p>总的来说，init与remote两条命令，init命令更侧重于初始化，remote侧重于拉取最新提交。&lt;/p>
+&lt;p>init通常用于第一次克隆一个包含子模块的仓库时，子模块的内容并不会自动被克隆下来，此时需要执行init这条命令。
+remote通常用于跟踪某个第三方依赖，使对其的调用保持最新。&lt;/p></description></item><item><title>submodule版本更新后，调用方如何调用最新版本submodule</title><link>https://gali.fan/blog/240905-01/</link><pubDate>Thu, 05 Sep 2024 10:07:42 +0800</pubDate><guid>https://gali.fan/blog/240905-01/</guid><description>&lt;h3 id="背景">背景&lt;/h3>
+&lt;p>我的hugo博客使用了一个主题，它是作为一个submodule被引用的，如图所示：&lt;/p>
+&lt;p>&lt;img src="1.png" alt="">&lt;/p>
+&lt;p>其中&lt;code>hugo-theme-codex-my&lt;/code>就是我的theme仓库，&lt;code>@&lt;/code>后面是我&lt;strong>theme的版本&lt;/strong>&lt;/p>
+&lt;p>昨天我在部署博客时，Github Action报了一项错误：&lt;/p>
+&lt;p>&lt;img src="2.png" alt="">&lt;/p>
+&lt;p>大概是在我的hugo theme中某个方法调用过于老旧，并且将要在未来版本移除，给出了一个替代方法。&lt;/p>
+&lt;p>于是我按照错误信息，将我的theme作了修改，并上传到对应的远程仓库的master分支（仅此一个分支），但重新部署仍然报相同的错误。&lt;/p>
+&lt;h3 id="原因">原因&lt;/h3>
+&lt;p>这是因为&lt;strong>在调用submodule时，并不是指定submodule的某个分支，而是指定了submodule的某个版本&lt;/strong>。
+我昨天更新了master分支，但我的博客还在调用旧版本，并没有应用最新的修改。&lt;/p>
+&lt;h3 id="解决">解决&lt;/h3>
+&lt;ol>
+&lt;li>首先，如果submodule有多个分支的话，我们可以指定一个分支，我就一个master分支，我还是指定了，修改&lt;code>.gitmodules&lt;/code>文件，其中&lt;code>branch&lt;/code>字段指定分支。&lt;/li>
+&lt;/ol>
+&lt;pre>&lt;code>[submodule &amp;quot;themes/hugo-theme-codex-my&amp;quot;]
+	path = themes/hugo-theme-codex-my
+	url = git@github.com:yueluz/hugo-theme-codex-my.git
+	branch = master
+&lt;/code>&lt;/pre>
+&lt;ol start="2">
+&lt;li>修改之后执行&lt;code>git submodule init&lt;/code>进行重新初始化子模块，使&lt;code>.gitmodules&lt;/code>文件生效，然后执行&lt;code>git submodule update --remote -f&lt;/code>命令，会根据&lt;code>.gitmodules&lt;/code>文件里的内容更新当前项目调用的submodule的版本至最新。执行&lt;code>git diff&lt;/code>命令可以看到此时我的博客项目里submodule的版本已经发生了变化。&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="3.png" alt="">&lt;/p>
+&lt;ol start="3">
+&lt;li>此时，再进行部署就会成功完成。&lt;/li>
+&lt;/ol></description></item></channel></rss>
